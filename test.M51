@@ -1,12 +1,16 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        11/19/2015  22:00:58  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/22/2015  20:17:39  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj TO test
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, main.obj TO test
+
+
+MEMORY MODEL: SMALL
 
 
 INPUT MODULES INCLUDED:
   STARTUP.obj (?C_STARTUP)
+  main.obj (MAIN)
 
 
 LINK MAP OF MODULE:  test (?C_STARTUP)
@@ -17,16 +21,26 @@ LINK MAP OF MODULE:  test (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            IDATA   0008H     0001H     UNIT         ?STACK
+            DATA    0008H     0002H     UNIT         _DATA_GROUP_
+            IDATA   000AH     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
             CODE    0003H     000CH     UNIT         ?C_C51STARTUP
+            CODE    000FH     0001H     UNIT         ?PR?MAIN?MAIN
 
 
 
-UNRESOLVED EXTERNAL SYMBOLS:
-   ?C_START
+OVERLAY MAP OF MODULE:   test (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                  0008H    0002H
 
 
 
@@ -37,7 +51,7 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
 
   -------         MODULE        ?C_STARTUP
   C:0003H         SEGMENT       ?C_C51STARTUP
-  I:0008H         SEGMENT       ?STACK
+  I:000AH         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
@@ -45,6 +59,9 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   D:0082H         SYMBOL        DPL
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2015  20:17:39  PAGE 2
+
+
   N:0080H         SYMBOL        IDATALEN
   C:0006H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
@@ -59,9 +76,6 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/19/2015  22:00:58  PAGE 2
-
-
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
   C:0003H         LINE#         133
@@ -72,14 +86,18 @@ SYMBOL TABLE OF MODULE:  test (?C_STARTUP)
   C:000CH         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
-*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
-    SYMBOL:  ?C_START
-    MODULE:  STARTUP.obj (?C_STARTUP)
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:000FH         PUBLIC        main
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        a
+  -------         ENDDO         
+  C:000FH         LINE#         2
+  C:000FH         LINE#         3
+  C:000FH         LINE#         5
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
 
-*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
-    SYMBOL:  ?C_START
-    MODULE:  STARTUP.obj (?C_STARTUP)
-    ADDRESS: 000DH
-
-Program Size: data=9.0 xdata=0 code=15
-LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
+Program Size: data=11.0 xdata=0 code=16
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

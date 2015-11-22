@@ -1,2 +1,3 @@
-"STARTUP.obj" 
+"STARTUP.obj",
+"main.obj" 
 TO "test" 
